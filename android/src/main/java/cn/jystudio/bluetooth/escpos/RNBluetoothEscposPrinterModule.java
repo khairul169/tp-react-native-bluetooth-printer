@@ -440,6 +440,15 @@ public class RNBluetoothEscposPrinterModule extends ReactContextBaseJavaModule
         sendDataByte(command);
     }
 
+    @ReactMethod
+    public void openDrawer(int nMode, int nTime1, int nTime2, final Promise promise) {
+        byte[] command = PrinterCommand.POS_Set_Cashbox(nMode, nTime1, nTime2);
+        if (sendDataByte(command)) {
+            promise.resolve(null);
+        } else {
+            promise.reject("COMMAND_NOT_SEND");
+        }
+    }
    
     private boolean sendDataByte(byte[] data) {
         if (data==null || mService.getState() != BluetoothService.STATE_CONNECTED) {

@@ -533,10 +533,11 @@ set blob of the line.
 #### printQRCode(String content, int size, int correctionLevel, int leftPadding)
 
 prints the qrcode.
-content: string text value
-size: integer size of qr code.
-correctionLevel: L:1, M:0, Q:3, H:2
-leftPadding: integer value for left padding of qrcode
+
+- `content`: string text value
+- `size`: integer size of qr code.
+- `correctionLevel`: L:1, M:0, Q:3, H:2
+- `leftPadding`: integer value for left padding of qrcode
 
 Example usage:
 
@@ -571,6 +572,20 @@ const printBarcode = async (
     2
   );
 };
+```
+
+#### openDrawer(int nMode, int nTime1, int nTime2)
+
+Kick the cash drawer.
+
+- `nMode`: DK connector pin to output control signals (0 for Pin2/drawer1 or 1 for Pin5/drawer2)
+- `nTime1`: ON time of the drawer kick signal.
+- `nTime2`: OFF time of the drawer kick signal (time before the next ON signal can be received).
+
+Example usage:
+
+```javascript
+await BluetoothEscposPrinter.openDrawer(0, 25, 250);
 ```
 
 ### Demos of printing a receipt
