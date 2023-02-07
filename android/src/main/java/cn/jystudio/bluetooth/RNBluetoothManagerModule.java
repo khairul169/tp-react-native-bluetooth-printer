@@ -173,21 +173,22 @@ public class RNBluetoothManagerModule extends ReactContextBaseJavaModule
             promise.reject(EVENT_BLUETOOTH_NOT_SUPPORT);
         }else {
             cancelDisCovery();
-            int permissionChecked = ContextCompat.checkSelfPermission(reactContext, android.Manifest.permission.ACCESS_COARSE_LOCATION);
-            if (permissionChecked == PackageManager.PERMISSION_DENIED) {
-                // // TODO: 2018/9/21
-                ActivityCompat.requestPermissions(reactContext.getCurrentActivity(), new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+            int permissionChecked = ContextCompat.checkSelfPermission(reactContext, android.Manifest.permission.ACCESS_FINE_LOCATION);
+            if (permissionChecked == PackageManager.PERMISSION_DENIED) { 
+                ActivityCompat.requestPermissions(reactContext.getCurrentActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }
 
             // Check android 12 bluetooth permission
-            int permissionChecked2 = ContextCompat.checkSelfPermission(reactContext, android.Manifest.permission.BLUETOOTH_CONNECT);
-            if (permissionChecked2 == PackageManager.PERMISSION_DENIED && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                ActivityCompat.requestPermissions(reactContext.getCurrentActivity(), new String[]{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                int bluetoothConnectPermission = ContextCompat.checkSelfPermission(reactContext, android.Manifest.permission.BLUETOOTH_CONNECT);
+                if (bluetoothConnectPermission == PackageManager.PERMISSION_DENIED) {
+                    ActivityCompat.requestPermissions(reactContext.getCurrentActivity(), new String[]{
                     android.Manifest.permission.BLUETOOTH_CONNECT,
                     android.Manifest.permission.BLUETOOTH_SCAN,
-                }, 1);
+                    }, 1);
+                } 
             }
-
+            
             pairedDeivce = new JSONArray();
             foundDevice = new JSONArray();
             Set<BluetoothDevice> boundDevices = adapter.getBondedDevices();
@@ -255,7 +256,7 @@ public class RNBluetoothManagerModule extends ReactContextBaseJavaModule
     }
 
     @ReactMethod
-    public void unpaire(String address,final Promise promise){
+    public void unpair(String address,final Promise promise){
         BluetoothAdapter adapter = this.getBluetoothAdapter();
         if (adapter!=null && adapter.isEnabled()) {
             BluetoothDevice device = adapter.getRemoteDevice(address);
