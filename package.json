@@ -9,6 +9,7 @@
   "description": "React-Native plugin for the bluetooth ESC/POS printers. This plugin is fork of react-native-bluetooth-escpos-printer",
   "files": [
     "index.js",
+    "types/index.d.ts",
     "android",
     "ios",
     "RNBluetoothEscposPrinter.podspec",
@@ -24,7 +25,9 @@
     "Tulpar Yazılım"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "index",
+  "types": "./types/index.d.ts",
+  "typings": "./types/index.d.ts",
   "name": "tp-react-native-bluetooth-printer",
   "homepage": "https://github.com/tulparyazilim/tp-react-native-bluetooth-printer#readme",
   "repository": {
@@ -34,8 +37,11 @@
   "peerDependencies": {
     "react-native": ">=0.55.4"
   },
+  "devDependencies": {
+    "typescript": "^4.8.3"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "1.2.1"
+  "version": "1.5.0"
 }
